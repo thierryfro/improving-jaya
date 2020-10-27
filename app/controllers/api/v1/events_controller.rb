@@ -5,7 +5,7 @@ class Api::V1::EventsController < Api::V1::BaseController
     # add .where with params to filter events by issue number
     @events = Event.where(number: params[:number])
 
-    render json: { events: @events.as_json }, status: 200
+    render json: { events: @events.as_json }, except: [ "id", "event_type", "number" ],  status: 200
   end
 
   def create
