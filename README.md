@@ -40,4 +40,8 @@
     To check the events from a particular number, you need to pass the :number on the request
     In the headers of request => { "login": "xxx", "password": "xxx"}
 
+  ** POST /api/v1/events/create_event
+    On github, in the repository that you want to create a webhook, and follow these 2 steps
+    -> https://developer.github.com/webhooks/
+    -> ​https://developer.github.com/webhooks/creating/
 
