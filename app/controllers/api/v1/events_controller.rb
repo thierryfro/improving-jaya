@@ -1,14 +1,19 @@
 class Api::V1::EventsController < Api::V1::BaseController
 
-
   def index
-    @events = Event.all
+
+    # add .where with params to filter events by issue number
+    @events = Event.where(number: params[:number])
 
     render json: { events: @events.as_json }, status: 200
   end
 
   def create
-    @event = Event.new(event_params)
+    @event = Event.new
+
+    @event.event_type = params[:hook][:type]
+    @event.number = params[:hook][:id]
+    @event.action = params[:hook][:events][0]
 
     if @event.save
       render json: { event: @event.as_json }, status: 200
@@ -17,9 +22,4 @@ class Api::V1::EventsController < Api::V1::BaseController
     end
   end
 
-  private
-
-  def event_params
-    params.require(:event).permit(:action, :event_type, :number)
-  end
 end

@@ -5,20 +5,19 @@ class Api::V1::BaseController < ActionController::API
   private
 
   def authenticate
-    byebug
-
 
     if request.headers['X-Hub-Signature'].present?
+      # check if token matches
       payload_body = request.body.read
       authenticate_payload(payload_body)
-      # check if token matches
+
     elsif (request.headers['login'] && request.headers['password']).present?
       # check if token matches
       authenticate_user
+
     else
       raise AuthenticationError::Unauthorized
     end
-    # rescue
   end
 
   def authenticate_user
